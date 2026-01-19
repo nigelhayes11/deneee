@@ -27,9 +27,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -U setuptools wheel Kekik httpx parsel requests cloudscraper beautifulsoup4
           
-      - name: neon.py Çalıştır
+      - name: a.py Çalıştır
         continue-on-error: true
-        run: python neon.py
+        run: python a.py
      
       - name: Değişiklik Kontrolü
         id: degisiklik_kontrol
