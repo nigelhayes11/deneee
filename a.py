@@ -54,4 +54,4 @@ with open(OUTPUT, "w", encoding="utf-8") as f:
         except Exception as e:
             print("❌ HATA:", url, e)
 
-print(f"🎯 {OUTPUT} hazır")
+print("🎯 neon.m3u hazır")
