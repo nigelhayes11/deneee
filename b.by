@@ -1,0 +1,60 @@
+import requests
+
+# Sadece 75d prefix'i ile çalışacak
+PREFIX = "75d"
+DOMAIN_NUM = 114  # Bilinen numara
+TLDS = ["lat", "cfd"]
+
+# Path listesi, istediğin tüm .m3u8 uzantıları burada olacak
+PATHS = [
+    "/yayinzirve.m3u8",
+    "/yayinb2.m3u8",
+    "/yayinb3.m3u8",
+    "/yayinb4.m3u8",
+    "/yayinb5.m3u8",
+    "/yayinbm1.m3u8",
+    "/yayinbm2.m3u8",
+    "/yayinss.m3u8",
+    "/yayinss2.m3u8"
+]
+
+REFERRER = "https://monotv524.com/"
+USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5)"
+OUTPUT = "b.m3u"
+
+headers = {
+    "User-Agent": USER_AGENT,
+    "Referer": REFERRER
+}
+
+def find_streams():
+    found_streams = []
+    for path in PATHS:
+        for tld in TLDS:
+            url = f"https://{PREFIX}.zirvedesin{DOMAIN_NUM}.{tld}{path}"
+            try:
+                r = requests.get(url, headers=headers, timeout=5)
+                if r.status_code == 200 and "#EXTM3U" in r.text:
+                    print("✅ BULUNDU:", url)
+                    found_streams.append((url, path))
+                    break  # Bu path için bulundu, diğer TLD'lere bakma
+                else:
+                    print("❌", url)
+            except Exception as e:
+                print("❌ Hata:", url, e)
+    return found_streams
+
+streams = find_streams()
+
+with open(OUTPUT, "w", encoding="utf-8") as f:
+    f.write("#EXTM3U\n")
+    for i, (url, path) in enumerate(streams, start=1):
+        f.write(f'#EXTINF:-1 group-title="Neon Spor",Neon Kanal {i}\n')
+        f.write(f'#EXTVLCOPT:http-user-agent={USER_AGENT}\n')
+        f.write(f'#EXTVLCOPT:http-referrer={REFERRER}\n')
+        f.write(url + "\n")
+
+if streams:
+    print(f"🎯 {OUTPUT} dosyası hazır, {len(streams)} kanal eklendi.")
+else:
+    print("⚠️ Hiçbir stream bulunamadı.")
