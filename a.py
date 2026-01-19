@@ -1,11 +1,9 @@
 import requests
 
-# Bilinen prefix ve domain
 PREFIX = "75d"
 DOMAIN_NUM = 114
 TLD = "lat"
 
-# Kontrol edilecek pathler ve kanal isimleri
 PATHS = [
     "/yayinzirve.m3u8",
     "/yayinb2.m3u8",
@@ -53,7 +51,7 @@ with open(OUTPUT, "w", encoding="utf-8") as f:
                 f.write(url + "\n")
             else:
                 print("❌ BULUNAMADI:", url)
-        except:
-            print("❌ HATA:", url)
+        except Exception as e:
+            print("❌ HATA:", url, e)
 
-print("🎯 neon.m3u hazır")
+print(f"🎯 {OUTPUT} hazır")
