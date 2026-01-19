@@ -30,7 +30,9 @@ jobs:
       - name: a.py Çalıştır
         continue-on-error: true
         run: python a.py
-     
+      - name: b.py Çalıştır
+        continue-on-error: true
+        run: python b.py
       - name: Değişiklik Kontrolü
         id: degisiklik_kontrol
         run: |
