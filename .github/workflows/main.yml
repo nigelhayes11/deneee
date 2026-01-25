@@ -28,12 +28,15 @@ jobs:
           pip install -U setuptools wheel Kekik httpx parsel requests cloudscraper beautifulsoup4
           
        
-      - name: a.py Çalıştır
+      - name: upp.py Çalıştır
         continue-on-error: true
-        run: python a.py
-      - name: b.py Çalıştır
+        run: python upp.py
+      - name: tv.py Çalıştır
         continue-on-error: true
-        run: python b.py
+        run: python tv.py
+      - name: AX.py Çalıştır
+        continue-on-error: true
+        run: python AX.py
       - name: Değişiklik Kontrolü
         id: degisiklik_kontrol
         run: |
